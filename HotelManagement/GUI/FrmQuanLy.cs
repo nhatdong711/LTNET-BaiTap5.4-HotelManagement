@@ -21,7 +21,7 @@ namespace HotelManagement.GUI
         public FrmQuanLy()
         {
             Text = "Quản lý phòng, dịch vụ & khách hàng";
-            Size = new Size(960, 560);
+            Size = new Size(1150, 620);
             StartPosition = FormStartPosition.CenterParent;
             Font = new Font("Segoe UI", 10F);
 
@@ -66,6 +66,8 @@ namespace HotelManagement.GUI
                 UiHelper.TaoNut("Làm mới", () => { txtSoPhong.Clear(); txtGiaPhong.Clear(); cbLoaiPhong.SelectedIndex = -1; }));
 
             SplitContainer split = new SplitContainer { Dock = DockStyle.Fill, SplitterDistance = 540 };
+            split.FixedPanel = FixedPanel.Panel2;
+            split.SizeChanged += (s2, e2) => { int d = split.Width - 400; if (d > 150) split.SplitterDistance = d; };
             split.Panel1.Controls.Add(dgvPhong);
             split.Panel2.Controls.Add(p);
             tab.Controls.Add(split);
@@ -76,6 +78,7 @@ namespace HotelManagement.GUI
         {
             dgvPhong.DataSource = phongBUS.GetAllTable();
             dgvPhong.Columns["GiaTheoGio"].DefaultCellStyle.Format = "N0";
+            DatTieuDe(dgvPhong, "SoPhong", "Số phòng", "LoaiPhong", "Loại phòng", "GiaTheoGio", "Giá / giờ", "TrangThai", "Trạng thái");
         }
 
         private PhongDTO DocPhong()
@@ -121,6 +124,8 @@ namespace HotelManagement.GUI
                 UiHelper.TaoNut("Làm mới", () => { txtMaDV.Clear(); txtTenDV.Clear(); txtGiaDV.Clear(); }));
 
             SplitContainer split = new SplitContainer { Dock = DockStyle.Fill, SplitterDistance = 540 };
+            split.FixedPanel = FixedPanel.Panel2;
+            split.SizeChanged += (s2, e2) => { int d = split.Width - 400; if (d > 150) split.SplitterDistance = d; };
             split.Panel1.Controls.Add(dgvDV);
             split.Panel2.Controls.Add(p);
             tab.Controls.Add(split);
@@ -131,6 +136,7 @@ namespace HotelManagement.GUI
         {
             dgvDV.DataSource = dvBUS.GetAll();
             dgvDV.Columns["DonGia"].DefaultCellStyle.Format = "N0";
+            DatTieuDe(dgvDV, "MaDV", "Mã DV", "TenDV", "Tên dịch vụ", "DonGia", "Đơn giá");
         }
 
         private DichVuDTO DocDV()
@@ -147,6 +153,12 @@ namespace HotelManagement.GUI
             dgvKH = UiHelper.TaoLuoi();
             tab.Controls.Add(dgvKH);
             return tab;
+        }
+
+        private static void DatTieuDe(DataGridView dgv, params string[] cap)
+        {
+            for (int i = 0; i + 1 < cap.Length; i += 2)
+                if (dgv.Columns.Contains(cap[i])) dgv.Columns[cap[i]].HeaderText = cap[i + 1];
         }
 
         private static decimal DocSo(string s, string tenTruong)

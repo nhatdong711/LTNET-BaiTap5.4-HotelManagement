@@ -61,7 +61,7 @@ namespace HotelManagement.GUI
         private void TaoGiaoDien()
         {
             MenuStrip menu = new MenuStrip();
-            menu.Items.Add("Quản lý phòng & dịch vụ", null, (s, e) =>
+            menu.Items.Add("Quản lý phòng && dịch vụ", null, (s, e) =>
             {
                 using (FrmQuanLy f = new FrmQuanLy()) f.ShowDialog(this);
                 UiHelper.ThucHien(TaiDuLieu);
@@ -161,7 +161,9 @@ namespace HotelManagement.GUI
         {
             TabPage tab = new TabPage("Dịch vụ & Check-out");
 
-            TableLayoutPanel tren = new TableLayoutPanel { Dock = DockStyle.Top, Height = 120, ColumnCount = 3, Padding = new Padding(6) };
+            TableLayoutPanel tren = new TableLayoutPanel { Dock = DockStyle.Top, Height = 100, ColumnCount = 3, RowCount = 2, Padding = new Padding(6) };
+            tren.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
+            tren.RowStyles.Add(new RowStyle(SizeType.Absolute, 44));
             tren.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
             tren.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 70));
             tren.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120));
@@ -178,7 +180,7 @@ namespace HotelManagement.GUI
 
             Panel duoi = new Panel { Dock = DockStyle.Bottom, Height = 170, Padding = new Padding(6) };
             lblHoaDon = new Label { Dock = DockStyle.Fill, Font = new Font("Consolas", 10.5F), Text = "" };
-            Button btnCheckOut = UiHelper.TaoNut("CHECK-OUT & THANH TOÁN", CheckOut, 240);
+            Button btnCheckOut = UiHelper.TaoNut("CHECK-OUT && THANH TOÁN", CheckOut, 240);
             btnCheckOut.Dock = DockStyle.Bottom;
             btnCheckOut.Height = 40;
             btnCheckOut.BackColor = Color.FromArgb(46, 160, 67);
